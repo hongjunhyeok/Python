@@ -1,0 +1,150 @@
+주 언어를 파이썬으로 사용할 경우 ::
+
+
+
+파이썬 설치
+
+- https://www.python.org/
+
+- 3.6.3 버전
+
+- 환경변수 추가 옵션에 체크
+
+
+
+PyQt 설치 >> cmd로 할 것 !!! 파이썬 내부 venv로 가상으로 설치하게 되면 실행이 안됨. 이건 qt5에 대한 함수들 설치하는거
+
+- cmd > pip3 install pyqt5
+
+
+
+PyQt 디자이너 설치 >> 이건 함수들을 GUI 모드로 어플 제작할 수 있게 만들어 주는거 
+
+- cmd > pip3 install PyQt5-tools
+
+
+
+---
+
+
+
+샘플 UI 만들어보기
+
+
+
+PyQt 디자이너 실행 >> 경로가 어려우므로 디자이너실행 파일이 들어있는 폴더 전체를 찾기 쉬운곳에 이동시킨다.
+
+- C:\Users\%USERNAME%\AppData\Local\Programs\Python\Python36-32\Lib\site-packages\pyqt5-tools\designer.exe
+
+- File > New > Main Window > Create
+
+- Widget Box 에서 label과 pushButton 추가
+
+- main_window.ui 파일로 저장
+
+- 미리보기는 Ctrl+R
+
+
+
+
+
+************주의 할 점. 디자이너로 만든 ui파일과 내가 만든 파이썬 프로젝트 파일이 같은 디렉토리에 있어야만 인식한다.
+다른 디렉토리에 있다면  "경로명"+"ui파일이름" 으로 앞에 붙여주어야 프로그램이 인식한다.
+
+ui 불러다 쓰거나 py 변환 (여기서는 불러다 씀)
+
+
+
+방법1) ui 불러다 쓰기
+
+- https://wikidocs.net/5227
+
+- 아래 코드를 test.py 로 저장
+
+
+
+import sys
+
+from PyQt5.QtWidgets import *
+
+from PyQt5 import uic
+
+
+
+form_class = uic.loadUiType("main_window.ui")[0]
+
+
+
+class MyWindow(QMainWindow, form_class):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.setupUi(self)
+
+        self.pushButton.clicked.connect(self.slot1)
+
+        
+
+    def slot1(self):
+
+        self.label.setText("클릭~")   
+
+
+
+if __name__ == "__main__":
+
+    app = QApplication(sys.argv)
+
+    myWindow = MyWindow()
+
+    myWindow.show()
+
+    app.exec_()
+
+
+
+
+
+방법2) ui를 py로 변환
+
+pyuic5 -x test.ui -o test.py
+
+
+
+---
+
+
+
+최종 실행
+
+
+
+cmd > python.exe test.py
+
+
+
+===
+
+
+
+참고 링크
+
+https://stackoverflow.com/questions/37987290/pyqt5-designer-and-python-3-5
+
+https://www.soma0sd.com/archives/464
+
+http://kit2013.tistory.com/240
+
+
+
+참고 개념
+
+디자이너 : F4 > 개체 선택 후 드래그앤드롭 > 슬롯 지정 가능 (클릭 등의 시그널시 슬롯 메서드 실행하는 개념) - https://www.youtube.com/watch?v=RF-W4MHGRwc
+
+창은 3가지 타입 (메인윈도우, 다이얼로그, 위젯) - http://kit2013.tistory.com/242
+
+
+
+출처: http://myinbox.tistory.com/109 [나의 인박스]
